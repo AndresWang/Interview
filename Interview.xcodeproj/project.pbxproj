@@ -98,6 +98,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		091866E52084B44B000A21D5 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				091F47B02084A5C00074C48B /* Query.swift */,
+				091F47AC2084A49B0074C48B /* CoreDataStore.swift */,
+				091F47AE2084A4CE0074C48B /* DataStoreDelegate.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		091866E62084B47B000A21D5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				091F47A6208498DA0074C48B /* SearchRequest.swift */,
+				0916ADBB20849332000E082B /* WeatherModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		091866E72084B487000A21D5 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0916ADB92084930D000E082B /* WeatherAPI.swift */,
+				091F47A1208497CE0074C48B /* APIDelegate.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		0993D445208336C200EB05FF = {
 			isa = PBXGroup;
 			children = (
@@ -123,15 +151,11 @@
 			children = (
 				0993D451208336C300EB05FF /* AppDelegate.swift */,
 				091F47A3208498C20074C48B /* Extensions.swift */,
-				091F47B02084A5C00074C48B /* Query.swift */,
-				091F47AC2084A49B0074C48B /* CoreDataStore.swift */,
-				091F47AE2084A4CE0074C48B /* DataStoreDelegate.swift */,
-				091F47A6208498DA0074C48B /* SearchRequest.swift */,
-				0916ADB92084930D000E082B /* WeatherAPI.swift */,
-				091F47A1208497CE0074C48B /* APIDelegate.swift */,
-				0916ADBB20849332000E082B /* WeatherModel.swift */,
-				091F479F208497030074C48B /* SearchInteractor.swift */,
+				091866E52084B44B000A21D5 /* DataStore */,
+				091866E72084B487000A21D5 /* Service */,
+				091866E62084B47B000A21D5 /* Models */,
 				091F47A8208499410074C48B /* SearchViewTrait.swift */,
+				091F479F208497030074C48B /* SearchInteractor.swift */,
 				0993D453208336C300EB05FF /* SearchViewController.swift */,
 				091F47AA20849F180074C48B /* ResultCell.swift */,
 				0993D455208336C300EB05FF /* Main.storyboard */,
