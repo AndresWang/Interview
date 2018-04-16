@@ -10,5 +10,8 @@ import Foundation
 
 
 struct Weather {
-    
+    var name: String
+    var description: String
+    var visibility: Int
+    var wind: [String: Double]
 }

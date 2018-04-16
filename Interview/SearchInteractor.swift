@@ -7,15 +7,21 @@
 //
 
 import Foundation
-protocol InteractorDelegate: APIOutputDelegate {
+protocol SearchInteractorDelegate: APIOutputDelegate {
+    var results: [Weather] {get}
     func configure()
+    func search(request: SearchRequest)
 }
-class Interactor: InteractorDelegate {
+class SearchInteractor: SearchInteractorDelegate {
     var api: APIDelegate!
     var searchRequest: SearchRequest?
+    var results: [Weather] = []
     
     func configure() {
         self.api = WeatherAPI(output: self)
+    }
+    func search(request: SearchRequest) {
+        
     }
     
     // MARK: - APIOutputDelegate
@@ -38,7 +44,8 @@ class Interactor: InteractorDelegate {
     
     // MARK: - Private Methods
     private func process(_ data: Data) {
-        searchResponse = data.parseTo(jsonType: MoviedbAPI.JSON.Response.self)?.toMovie()
-        DispatchQueue.main.async {self.searchRequest?.successHandler(searchText, self.isLoadMore)}
+        results = data.parseTo(jsonType: WeatherAPI.JSON.Response.self)?.toWeather()
+        let searchText = results.count > 0 ? searchRequest?.text : nil
+        DispatchQueue.main.async {self.searchRequest?.successHandler(searchText)}
     }
 }

@@ -10,6 +10,6 @@ import Foundation
 
 struct SearchRequest {
     var text: String
-    var successHandler: () -> Void
+    var successHandler: (String?) -> Void
     var errorHandler: () -> Void
 }

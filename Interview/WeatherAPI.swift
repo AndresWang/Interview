@@ -19,13 +19,22 @@ class WeatherAPI {
     // MARK: - JSON
     struct JSON {
         struct Response: Codable {
-            var page: Int
-            var total_results: Int
-            var total_pages: Int
-            
+            var coord: [String: Double]
+            var weather: [WeatherInfo]
+            var base: String
+            var main: [String: Double]
+            var visibility: Int
+            var wind: [String: Double]
             func toWeather() -> Weather {
-                return Weather()
+                return Weather(name: weather.first!.name, description: weather.first!.description, visibility: visibility, wind: wind)
             }
+        }
+        
+        struct WeatherInfo: Codable {
+            var id: Int
+            var name: String
+            var description: String
+            var icon: String
         }
     }
     
