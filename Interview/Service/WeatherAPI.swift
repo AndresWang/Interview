@@ -40,16 +40,4 @@ class WeatherAPI {
             var icon: String
         }
     }
-    
-    // MARK: - Helper Methods
-    func getUrl(searchText: String) -> URL {
-        let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        let searchTerm = String(format: domain + "q=%@" + apiKey, encodedText)
-        return URL(string: searchTerm)!
-    }
-    func getUrl(lat: Double, lon:  Double) -> URL {
-        let searchTerm = String(format: domain + "lat=%f&lon=%f" + apiKey, lat, lon)
-        return URL(string: searchTerm)!
-    }
-    
 }

@@ -11,16 +11,14 @@ import UIKit
 import CoreLocation
 
 // Note: SearchViewTrait and its extension not noly make our SearchViewController extremely light, but also make its code shareable for all UITableViewControllers. This is protocol oriented programming's composition. I prefer composition over inheritance, because it is much more flexible. I used this technique in my own project because I have four UITableViewControllers which need the same essential funtionality, but each view still can has its own specialties.
-protocol SearchViewTrait: UISearchControllerDelegate, UISearchBarDelegate, ActivityIndicatable {
+protocol SearchViewTrait: UISearchBarDelegate, ActivityIndicatable {
     var interactor: SearchInteractorDelegate! {get set}
     func searchViewAwakeFromNib()
     func searchViewDidLoad()
-    func searchViewDidAppear()
     func searchViewNumberOfRows() -> Int
     func searchViewCellForRowAt(_ indexPath: IndexPath) -> UITableViewCell
     func searchViewDidSelectRowAt(_ indexPath: IndexPath)
     func searchViewSearchButtonClicked(_ searchBar: UISearchBar)
-    func searchViewDidPresentSearchController(_ searchController: UISearchController)
 }
 
 extension SearchViewTrait where Self: UITableViewController {
@@ -36,11 +34,6 @@ extension SearchViewTrait where Self: UITableViewController {
         title = NSLocalizedString("Search", comment: "NavigationBar title")
         addSearchController()
         startLocationService()
-    }
-    func searchViewDidAppear() {
-        // Call keyboard up only for first time
-        guard interactor.result == nil else {return}
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {self.navigationItem.searchController?.isActive = true}
     }
     
     // MARK: - UITableView DataSource & Delegate
@@ -77,15 +70,9 @@ extension SearchViewTrait where Self: UITableViewController {
         startSearch(searchBar, text)
     }
     
-    // MARK: - UISearchControllerDelegate
-    func searchViewDidPresentSearchController(_ searchController: UISearchController) {
-        DispatchQueue.main.async {searchController.searchBar.becomeFirstResponder()}
-    }
-    
     // MARK: - Private Methods
     private func addSearchController() {
         let search = UISearchController(searchResultsController: nil)
-        search.delegate = self
         search.obscuresBackgroundDuringPresentation = false
         search.definesPresentationContext = true
         search.searchBar.delegate = self

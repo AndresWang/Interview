@@ -32,6 +32,7 @@ extension WeatherAPI: APIDelegate {
         startDataTask(url: url, forSearch: false)
     }
     
+    // MARK: - Private Methods
     private func startDataTask(url: URL, forSearch: Bool) {
         dataTask?.cancel()
         
@@ -41,5 +42,14 @@ extension WeatherAPI: APIDelegate {
             self.output?.didRecieveResponse(data: data, response: response, error: error, forSearch: forSearch)
         }
         dataTask?.resume()
+    }
+    private func getUrl(searchText: String) -> URL {
+        let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let searchTerm = String(format: domain + "q=%@" + apiKey, encodedText)
+        return URL(string: searchTerm)!
+    }
+    private func getUrl(lat: Double, lon:  Double) -> URL {
+        let searchTerm = String(format: domain + "lat=%f&lon=%f" + apiKey, lat, lon)
+        return URL(string: searchTerm)!
     }
 }

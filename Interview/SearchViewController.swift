@@ -12,21 +12,15 @@ import UIKit
 class SearchViewController: UITableViewController, SearchViewTrait {
     var interactor: SearchInteractorDelegate!
     var activityView: UIVisualEffectView?
-    
 
     // MARK: - View LifeCyle
     override func awakeFromNib() {
         super.awakeFromNib()
         searchViewAwakeFromNib()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchViewDidLoad()
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        searchViewDidAppear()
     }
     
     // MARK: - UITableView DataSource & Delegate
@@ -43,11 +37,6 @@ class SearchViewController: UITableViewController, SearchViewTrait {
     // MARK: - UISearchBarDelegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchViewSearchButtonClicked(searchBar)
-    }
-    
-    // MARK: - UISearchControllerDelegate
-    func didPresentSearchController(_ searchController: UISearchController) {
-        searchViewDidPresentSearchController(searchController)
     }
 }
 
