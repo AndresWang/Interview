@@ -13,6 +13,10 @@ typealias ShouldPresentDeniedAlert = Bool
 protocol LocationDelegate: class, CLLocationManagerDelegate {
     func startLocationService() -> ShouldPresentDeniedAlert
 }
+protocol LocationOutputDelegate: class {
+    func didGetLocation(location: CLLocation)
+    func didFailToGetLocation(error: NSError)
+}
 
 extension LocationService: LocationDelegate {
     // MARK: - Boundary Methods
@@ -36,26 +40,18 @@ extension LocationService: LocationDelegate {
         print("Location Manager Failure: \(error)")
         guard (error as NSError).code != CLError.locationUnknown.rawValue else {return}
         
-        lastLocationError = error
         stopLocationManager()
-        updateLabels()
+        output?.didFailToGetLocation(error: error as NSError)
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let newLocation = locations.last!
         print("didUpdateLocations \(newLocation)")
-        location = newLocation
-        updateLabels()
+        output?.didGetLocation(location: newLocation)
     }
     private func stopLocationManager() {
         guard updatingLocation else {return}
         locationManager.stopUpdatingLocation()
         locationManager.delegate = nil
         updatingLocation = false
-    }
-    private func updateLabels() {
-        guard let location = self.location else {return}
-        let latitudeText = String(format: "%.8f", location.coordinate.latitude)
-        let longitudeText = String(format: "%.8f", location.coordinate.longitude)
-        print(latitudeText, longitudeText)
     }
 }

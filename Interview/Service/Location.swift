@@ -11,7 +11,11 @@ import CoreLocation
 
 class LocationService: NSObject {
     let locationManager = CLLocationManager()
-    var location: CLLocation?
     var updatingLocation = false
-    var lastLocationError: Error?
+    weak var output: LocationOutputDelegate?
+    
+    init(output: LocationOutputDelegate) {
+        self.output = output
+        super.init()
+    }
 }

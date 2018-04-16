@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 // Note: SearchViewTrait and its extension not noly make our SearchViewController extremely light, but also make its code shareable for all UITableViewControllers. This is protocol oriented programming's composition. I prefer composition over inheritance, because it is much more flexible. I used this technique in my own project because I have four UITableViewControllers which need the same essential funtionality, but each view still can has its own specialties.
 protocol SearchViewTrait: UISearchControllerDelegate, UISearchBarDelegate, ActivityIndicatable {
@@ -33,15 +34,9 @@ extension SearchViewTrait where Self: UITableViewController {
     func searchViewDidLoad() {
         tableView.rowHeight = 120
         title = NSLocalizedString("Search", comment: "NavigationBar title")
-        // Add UISearchController
-        let search = UISearchController(searchResultsController: nil)
-        search.delegate = self
-        search.obscuresBackgroundDuringPresentation = false
-        search.definesPresentationContext = true
-        search.searchBar.delegate = self
-        search.searchBar.placeholder = NSLocalizedString("City Name", comment: "A placeholder to search weather" )
-        navigationItem.searchController = search
-        if interactor.startLocationService() {showLocationServicesDeniedAlert()}
+        addSearchController()
+        let request = LocationRequest(successHandler: locationSuccessHandler, errorHandler: locationErrorHandler)
+        if interactor.startLocationService(request: request) {showLocationServicesDeniedAlert()}
     }
     func searchViewDidAppear() {
         // Call keyboard up only for first time
@@ -74,13 +69,28 @@ extension SearchViewTrait where Self: UITableViewController {
         startSearch(searchBar, text)
     }
     
+    // MARK: - UISearchControllerDelegate
+    func searchViewDidPresentSearchController(_ searchController: UISearchController) {
+        DispatchQueue.main.async {searchController.searchBar.becomeFirstResponder()}
+    }
+    
+    // MARK: - Private Methods
+    private func addSearchController() {
+        let search = UISearchController(searchResultsController: nil)
+        search.delegate = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.definesPresentationContext = true
+        search.searchBar.delegate = self
+        search.searchBar.placeholder = NSLocalizedString("City Name", comment: "A placeholder to search weather" )
+        navigationItem.searchController = search
+    }
     private func startSearch(_ searchBar: UISearchBar, _ text: String) {
         searchBar.resignFirstResponder()
-        let request = SearchRequest(text: text, successHandler: successHandler, errorHandler: errorHandler)
+        let request = SearchRequest(text: text, successHandler: searchSuccessHandler, errorHandler: searchErrorHandler)
         interactor.search(request: request)
         startActivityIndicator()
     }
-    private func successHandler(searchText: String?) {
+    private func searchSuccessHandler(searchText: String?) {
         endSearch()
         if let text = searchText {
             interactor.saveSuccessfulQuery(searchText: text)
@@ -88,7 +98,7 @@ extension SearchViewTrait where Self: UITableViewController {
             showNothingFoundError()
         }
     }
-    private func errorHandler() {
+    private func searchErrorHandler() {
         endSearch()
         showNetworkError()
     }
@@ -97,9 +107,10 @@ extension SearchViewTrait where Self: UITableViewController {
         tableView.reloadData()
         navigationItem.searchController?.isActive = false
     }
-    
-    // MARK: - UISearchControllerDelegate
-    func searchViewDidPresentSearchController(_ searchController: UISearchController) {
-        DispatchQueue.main.async {searchController.searchBar.becomeFirstResponder()}
+    private func locationSuccessHandler(location: CLLocation) {
+        print("Success")
+    }
+    private func locationErrorHandler(error: NSError) {
+        print("Error")
     }
 }

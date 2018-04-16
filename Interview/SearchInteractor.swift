@@ -7,23 +7,26 @@
 //
 
 import Foundation
-protocol SearchInteractorDelegate: APIOutputDelegate {
+import CoreLocation
+
+protocol SearchInteractorDelegate: APIOutputDelegate, LocationOutputDelegate {
     var result: Weather? {get}
     func configure()
     func search(request: SearchRequest)
     func saveSuccessfulQuery(searchText: String)
-    func startLocationService() -> ShouldPresentDeniedAlert
+    func startLocationService(request: LocationRequest) -> ShouldPresentDeniedAlert
 }
 class SearchInteractor: SearchInteractorDelegate {
     var api: APIDelegate!
     var location: LocationDelegate!
     var dataStore: DataStoreDelegate!
     var searchRequest: SearchRequest?
+    var locationRequest: LocationRequest?
     var result: Weather?
     
     func configure() {
         self.api = WeatherAPI(output: self)
-        self.location = LocationService()
+        self.location = LocationService(output: self)
         self.dataStore = CoreDataStore.sharedInstance
     }
     func search(request: SearchRequest) {
@@ -34,7 +37,8 @@ class SearchInteractor: SearchInteractorDelegate {
     func saveSuccessfulQuery(searchText: String) {
         dataStore.saveSuccessfulQuery(text: searchText)
     }
-    func startLocationService() -> ShouldPresentDeniedAlert {
+    func startLocationService(request: LocationRequest) -> ShouldPresentDeniedAlert {
+        self.locationRequest = request
         return location.startLocationService()
     }
     
@@ -54,6 +58,14 @@ class SearchInteractor: SearchInteractorDelegate {
         
         // Handle errors
         DispatchQueue.main.async {self.searchRequest?.errorHandler()}
+    }
+    
+    // MARK: - LocationOutputDelegate
+    func didGetLocation(location: CLLocation) {
+        self.locationRequest?.successHandler(location)
+    }
+    func didFailToGetLocation(error: NSError) {
+        self.locationRequest?.errorHandler(error)
     }
     
     // MARK: - Private Methods
