@@ -49,9 +49,7 @@ extension LocationService: LocationDelegate {
         output?.didGetLocation(location: newLocation)
     }
     private func stopLocationManager() {
-        guard updatingLocation else {return}
         locationManager.stopUpdatingLocation()
         locationManager.delegate = nil
-        updatingLocation = false
     }
 }

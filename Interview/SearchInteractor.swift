@@ -62,10 +62,10 @@ class SearchInteractor: SearchInteractorDelegate {
     
     // MARK: - LocationOutputDelegate
     func didGetLocation(location: CLLocation) {
-        self.locationRequest?.successHandler(location)
+        locationRequest?.successHandler()
     }
     func didFailToGetLocation(error: NSError) {
-        self.locationRequest?.errorHandler(error)
+        locationRequest?.errorHandler()
     }
     
     // MARK: - Private Methods

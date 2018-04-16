@@ -35,8 +35,7 @@ extension SearchViewTrait where Self: UITableViewController {
         tableView.rowHeight = 120
         title = NSLocalizedString("Search", comment: "NavigationBar title")
         addSearchController()
-        let request = LocationRequest(successHandler: locationSuccessHandler, errorHandler: locationErrorHandler)
-        if interactor.startLocationService(request: request) {showLocationServicesDeniedAlert()}
+        startLocationService()
     }
     func searchViewDidAppear() {
         // Call keyboard up only for first time
@@ -84,6 +83,11 @@ extension SearchViewTrait where Self: UITableViewController {
         search.searchBar.placeholder = NSLocalizedString("City Name", comment: "A placeholder to search weather" )
         navigationItem.searchController = search
     }
+    private func startLocationService() {
+        let request = LocationRequest(successHandler: locationSuccessHandler, errorHandler: locationErrorHandler)
+        let shouldShowDeniedAlert = interactor.startLocationService(request: request)
+        if shouldShowDeniedAlert {showLocationServicesDeniedAlert()}
+    }
     private func startSearch(_ searchBar: UISearchBar, _ text: String) {
         searchBar.resignFirstResponder()
         let request = SearchRequest(text: text, successHandler: searchSuccessHandler, errorHandler: searchErrorHandler)
@@ -107,10 +111,10 @@ extension SearchViewTrait where Self: UITableViewController {
         tableView.reloadData()
         navigationItem.searchController?.isActive = false
     }
-    private func locationSuccessHandler(location: CLLocation) {
-        print("Success")
+    private func locationSuccessHandler() {
+        tableView.reloadData()
     }
-    private func locationErrorHandler(error: NSError) {
-        print("Error")
+    private func locationErrorHandler() {
+        tableView.reloadData()
     }
 }

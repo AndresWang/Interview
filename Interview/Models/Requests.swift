@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreLocation
 
 struct SearchRequest {
     var text: String
@@ -15,6 +14,6 @@ struct SearchRequest {
     var errorHandler: () -> Void
 }
 struct LocationRequest {
-    var successHandler: (CLLocation) -> Void
-    var errorHandler: (NSError) -> Void
+    var successHandler: () -> Void
+    var errorHandler: () -> Void
 }
