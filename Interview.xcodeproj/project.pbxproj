@@ -15,6 +15,9 @@
 		091F47A7208498DA0074C48B /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F47A6208498DA0074C48B /* SearchRequest.swift */; };
 		091F47A9208499410074C48B /* SearchViewTrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F47A8208499410074C48B /* SearchViewTrait.swift */; };
 		091F47AB20849F180074C48B /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F47AA20849F180074C48B /* ResultCell.swift */; };
+		091F47AD2084A49B0074C48B /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F47AC2084A49B0074C48B /* CoreDataStore.swift */; };
+		091F47AF2084A4CE0074C48B /* DataStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F47AE2084A4CE0074C48B /* DataStoreDelegate.swift */; };
+		091F47B12084A5C00074C48B /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F47B02084A5C00074C48B /* Query.swift */; };
 		0993D452208336C300EB05FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0993D451208336C300EB05FF /* AppDelegate.swift */; };
 		0993D454208336C300EB05FF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0993D453208336C300EB05FF /* SearchViewController.swift */; };
 		0993D457208336C300EB05FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0993D455208336C300EB05FF /* Main.storyboard */; };
@@ -51,6 +54,9 @@
 		091F47A6208498DA0074C48B /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		091F47A8208499410074C48B /* SearchViewTrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewTrait.swift; sourceTree = "<group>"; };
 		091F47AA20849F180074C48B /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
+		091F47AC2084A49B0074C48B /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		091F47AE2084A4CE0074C48B /* DataStoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreDelegate.swift; sourceTree = "<group>"; };
+		091F47B02084A5C00074C48B /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		0993D44E208336C300EB05FF /* Interview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Interview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0993D451208336C300EB05FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0993D453208336C300EB05FF /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +123,9 @@
 			children = (
 				0993D451208336C300EB05FF /* AppDelegate.swift */,
 				091F47A3208498C20074C48B /* Extensions.swift */,
+				091F47B02084A5C00074C48B /* Query.swift */,
+				091F47AC2084A49B0074C48B /* CoreDataStore.swift */,
+				091F47AE2084A4CE0074C48B /* DataStoreDelegate.swift */,
 				091F47A6208498DA0074C48B /* SearchRequest.swift */,
 				0916ADB92084930D000E082B /* WeatherAPI.swift */,
 				091F47A1208497CE0074C48B /* APIDelegate.swift */,
@@ -289,10 +298,13 @@
 				091F47A4208498C20074C48B /* Extensions.swift in Sources */,
 				091F47AB20849F180074C48B /* ResultCell.swift in Sources */,
 				0916ADBA2084930D000E082B /* WeatherAPI.swift in Sources */,
+				091F47AD2084A49B0074C48B /* CoreDataStore.swift in Sources */,
 				0993D452208336C300EB05FF /* AppDelegate.swift in Sources */,
+				091F47B12084A5C00074C48B /* Query.swift in Sources */,
 				0993D45A208336C300EB05FF /* Interview.xcdatamodeld in Sources */,
 				091F47A7208498DA0074C48B /* SearchRequest.swift in Sources */,
 				091F47A9208499410074C48B /* SearchViewTrait.swift in Sources */,
+				091F47AF2084A4CE0074C48B /* DataStoreDelegate.swift in Sources */,
 				0916ADBC20849332000E082B /* WeatherModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,17 +11,25 @@ protocol SearchInteractorDelegate: APIOutputDelegate {
     var results: [Weather] {get}
     func configure()
     func search(request: SearchRequest)
+    func saveSuccessfulQuery(searchText: String)
 }
 class SearchInteractor: SearchInteractorDelegate {
     var api: APIDelegate!
+    var dataStore: DataStoreDelegate!
     var searchRequest: SearchRequest?
     var results: [Weather] = []
     
     func configure() {
         self.api = WeatherAPI(output: self)
+        self.dataStore = CoreDataStore.sharedInstance
     }
     func search(request: SearchRequest) {
-        
+        self.searchRequest = request
+        let url = WeatherAPI.searchURL(with: request.text)
+        api.startDataTask(url: url)
+    }
+    func saveSuccessfulQuery(searchText: String) {
+        dataStore.saveSuccessfulQuery(text: searchText)
     }
     
     // MARK: - APIOutputDelegate
