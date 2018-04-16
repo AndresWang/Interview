@@ -41,6 +41,7 @@ extension SearchViewTrait where Self: UITableViewController {
         search.searchBar.delegate = self
         search.searchBar.placeholder = NSLocalizedString("City Name", comment: "A placeholder to search weather" )
         navigationItem.searchController = search
+        if interactor.startLocationService() {showLocationServicesDeniedAlert()}
     }
     func searchViewDidAppear() {
         // Call keyboard up only for first time

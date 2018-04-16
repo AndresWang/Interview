@@ -12,12 +12,14 @@ import UIKit
 class SearchViewController: UITableViewController, SearchViewTrait {
     var interactor: SearchInteractorDelegate!
     var activityView: UIVisualEffectView?
+    
 
     // MARK: - View LifeCyle
     override func awakeFromNib() {
         super.awakeFromNib()
         searchViewAwakeFromNib()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchViewDidLoad()

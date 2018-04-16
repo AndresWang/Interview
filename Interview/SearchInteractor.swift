@@ -12,15 +12,18 @@ protocol SearchInteractorDelegate: APIOutputDelegate {
     func configure()
     func search(request: SearchRequest)
     func saveSuccessfulQuery(searchText: String)
+    func startLocationService() -> ShouldPresentDeniedAlert
 }
 class SearchInteractor: SearchInteractorDelegate {
     var api: APIDelegate!
+    var location: LocationDelegate!
     var dataStore: DataStoreDelegate!
     var searchRequest: SearchRequest?
     var result: Weather?
     
     func configure() {
         self.api = WeatherAPI(output: self)
+        self.location = LocationService()
         self.dataStore = CoreDataStore.sharedInstance
     }
     func search(request: SearchRequest) {
@@ -30,6 +33,9 @@ class SearchInteractor: SearchInteractorDelegate {
     }
     func saveSuccessfulQuery(searchText: String) {
         dataStore.saveSuccessfulQuery(text: searchText)
+    }
+    func startLocationService() -> ShouldPresentDeniedAlert {
+        return location.startLocationService()
     }
     
     // MARK: - APIOutputDelegate

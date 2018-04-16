@@ -26,6 +26,8 @@
 		0993D45F208336C900EB05FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0993D45D208336C900EB05FF /* LaunchScreen.storyboard */; };
 		0993D46A208336CA00EB05FF /* InterviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0993D469208336CA00EB05FF /* InterviewTests.swift */; };
 		0993D475208336CA00EB05FF /* InterviewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0993D474208336CA00EB05FF /* InterviewUITests.swift */; };
+		09B6A5072084ED440056C224 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B6A5062084ED440056C224 /* Location.swift */; };
+		09B6A5092084F9630056C224 /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B6A5082084F9630056C224 /* LocationDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		0993D470208336CA00EB05FF /* InterviewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InterviewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0993D474208336CA00EB05FF /* InterviewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterviewUITests.swift; sourceTree = "<group>"; };
 		0993D476208336CA00EB05FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09B6A5062084ED440056C224 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		09B6A5082084F9630056C224 /* LocationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,8 @@
 			children = (
 				0916ADB92084930D000E082B /* WeatherAPI.swift */,
 				091F47A1208497CE0074C48B /* APIDelegate.swift */,
+				09B6A5062084ED440056C224 /* Location.swift */,
+				09B6A5082084F9630056C224 /* LocationDelegate.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -321,8 +327,10 @@
 				0993D454208336C300EB05FF /* SearchViewController.swift in Sources */,
 				091F47A4208498C20074C48B /* Extensions.swift in Sources */,
 				091F47AB20849F180074C48B /* ResultCell.swift in Sources */,
+				09B6A5092084F9630056C224 /* LocationDelegate.swift in Sources */,
 				0916ADBA2084930D000E082B /* WeatherAPI.swift in Sources */,
 				091F47AD2084A49B0074C48B /* CoreDataStore.swift in Sources */,
+				09B6A5072084ED440056C224 /* Location.swift in Sources */,
 				0993D452208336C300EB05FF /* AppDelegate.swift in Sources */,
 				091F47B12084A5C00074C48B /* Query.swift in Sources */,
 				0993D45A208336C300EB05FF /* Interview.xcdatamodeld in Sources */,
