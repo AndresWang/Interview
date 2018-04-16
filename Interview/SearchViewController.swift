@@ -8,22 +8,21 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class SearchViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return 0
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
     }
 
 
