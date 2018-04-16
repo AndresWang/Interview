@@ -8,7 +8,7 @@
 
 import Foundation
 protocol SearchInteractorDelegate: APIOutputDelegate {
-    var results: [Weather] {get}
+    var result: Weather? {get}
     func configure()
     func search(request: SearchRequest)
     func saveSuccessfulQuery(searchText: String)
@@ -17,7 +17,7 @@ class SearchInteractor: SearchInteractorDelegate {
     var api: APIDelegate!
     var dataStore: DataStoreDelegate!
     var searchRequest: SearchRequest?
-    var results: [Weather] = []
+    var result: Weather?
     
     func configure() {
         self.api = WeatherAPI(output: self)
@@ -52,8 +52,8 @@ class SearchInteractor: SearchInteractorDelegate {
     
     // MARK: - Private Methods
     private func process(_ data: Data) {
-        results = data.parseTo(jsonType: WeatherAPI.JSON.Response.self)?.toWeather()
-        let searchText = results.count > 0 ? searchRequest?.text : nil
+        result = data.parseTo(jsonType: WeatherAPI.JSON.Response.self)?.toWeather()
+        let searchText = result != nil ? searchRequest?.text : nil
         DispatchQueue.main.async {self.searchRequest?.successHandler(searchText)}
     }
 }

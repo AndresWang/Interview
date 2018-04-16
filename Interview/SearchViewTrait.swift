@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol SearchViewTrait: class, UISearchBarDelegate, ActivityIndicatable {
+protocol SearchViewTrait: UISearchBarDelegate, ActivityIndicatable {
     var interactor: SearchInteractorDelegate! {get set}
     func searchViewAwakeFromNib()
     func searchViewDidLoad()
@@ -39,12 +39,11 @@ extension SearchViewTrait where Self: UITableViewController {
     
     // MARK: - UITableView DataSource & Delegate
     func searchViewNumberOfRows() -> Int {
-        return interactor.results.count
+        return interactor.result == nil ? 0 : 1
     }
     func searchViewCellForRowAt(_ indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath) as! ResultCell
-        let result = interactor.results[indexPath.row]
-        cell.configure(result)
+        cell.configure(interactor.result!)
         return cell
     }
     func searchViewDidSelectRowAt(_ indexPath: IndexPath) {
