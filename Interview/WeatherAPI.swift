@@ -25,14 +25,15 @@ class WeatherAPI {
             var main: [String: Double]
             var visibility: Int
             var wind: [String: Double]
+            var name: String
             func toWeather() -> Weather {
-                return Weather(name: weather.first!.name, description: weather.first!.description, visibility: visibility, wind: wind)
+                return Weather(description: weather.first!.description, visibility: visibility, wind: wind, name: name)
             }
         }
         
         struct WeatherInfo: Codable {
             var id: Int
-            var name: String
+            var main: String
             var description: String
             var icon: String
         }

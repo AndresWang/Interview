@@ -8,10 +8,12 @@
 
 import UIKit
 
+// Note: A very skinny viewController
 class SearchViewController: UITableViewController, SearchViewTrait {
     var interactor: SearchInteractorDelegate!
     var activityView: UIVisualEffectView?
 
+    // MARK: - View LifeCyle
     override func awakeFromNib() {
         super.awakeFromNib()
         searchViewAwakeFromNib()
@@ -20,8 +22,12 @@ class SearchViewController: UITableViewController, SearchViewTrait {
         super.viewDidLoad()
         searchViewDidLoad()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchViewDidAppear()
+    }
     
-    
+    // MARK: - UITableView DataSource & Delegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchViewNumberOfRows()
     }
@@ -30,6 +36,16 @@ class SearchViewController: UITableViewController, SearchViewTrait {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchViewDidSelectRowAt(indexPath)
+    }
+    
+    // MARK: - UISearchBarDelegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchViewSearchButtonClicked(searchBar)
+    }
+    
+    // MARK: - UISearchControllerDelegate
+    func didPresentSearchController(_ searchController: UISearchController) {
+        searchViewDidPresentSearchController(searchController)
     }
 }
 
