@@ -11,6 +11,7 @@ import CoreLocation
 
 protocol SearchInteractorDelegate: APIOutputDelegate, LocationOutputDelegate {
     var result: Weather? {get}
+    var currentWeather: Weather? {get}
     func configure()
     func search(request: SearchRequest)
     func saveSuccessfulQuery(searchText: String)
@@ -23,6 +24,7 @@ class SearchInteractor: SearchInteractorDelegate {
     var searchRequest: SearchRequest?
     var locationRequest: LocationRequest?
     var result: Weather?
+    var currentWeather: Weather?
     
     func configure() {
         self.api = WeatherAPI(output: self)
@@ -31,8 +33,7 @@ class SearchInteractor: SearchInteractorDelegate {
     }
     func search(request: SearchRequest) {
         self.searchRequest = request
-        let url = WeatherAPI.searchURL(with: request.text)
-        api.startDataTask(url: url)
+        api.startFetchData(searchText: request.text)
     }
     func saveSuccessfulQuery(searchText: String) {
         dataStore.saveSuccessfulQuery(text: searchText)
@@ -43,13 +44,17 @@ class SearchInteractor: SearchInteractorDelegate {
     }
     
     // MARK: - APIOutputDelegate
-    func didRecieveResponse(data: Data?, response: URLResponse?, error: Error?) {
+    func didRecieveResponse(data: Data?, response: URLResponse?, error: Error?, forSearch: Bool) {
         if let error = error as NSError?, error.code == -999 {
             print("URLSession's task was cancelled -> Handled silently")
             return /* Exit */
         } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
             if let data = data {
-                process(data)
+                if forSearch {
+                    processSearchResult(data)
+                } else {
+                    processCurrentWeather(data)
+                }
                 return /* Exit */
             }
         } else {
@@ -62,6 +67,7 @@ class SearchInteractor: SearchInteractorDelegate {
     
     // MARK: - LocationOutputDelegate
     func didGetLocation(location: CLLocation) {
+        api.startFetchData(lon: location.coordinate.longitude, lat: location.coordinate.latitude)
         locationRequest?.successHandler()
     }
     func didFailToGetLocation(error: NSError) {
@@ -69,9 +75,13 @@ class SearchInteractor: SearchInteractorDelegate {
     }
     
     // MARK: - Private Methods
-    private func process(_ data: Data) {
+    private func processSearchResult(_ data: Data) {
         result = data.parseTo(jsonType: WeatherAPI.JSON.Response.self)?.toWeather()
         let searchText = result != nil ? searchRequest?.text : nil
         DispatchQueue.main.async {self.searchRequest?.successHandler(searchText)}
+    }
+    private func processCurrentWeather(_ data: Data) {
+        currentWeather = data.parseTo(jsonType: WeatherAPI.JSON.Response.self)?.toWeather()
+        DispatchQueue.main.async {self.locationRequest?.successHandler()}
     }
 }

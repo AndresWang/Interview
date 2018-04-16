@@ -29,13 +29,15 @@ extension LocationService: LocationDelegate {
         default:
             break
         }
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        locationManager.startUpdatingLocation()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+            locationManager.startUpdatingLocation()
+        }
         return false
     }
     
-    // MARK: CLLocationManagerDelegate
+    // MARK: - CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Manager Failure: \(error)")
         guard (error as NSError).code != CLError.locationUnknown.rawValue else {return}
@@ -44,9 +46,13 @@ extension LocationService: LocationDelegate {
         output?.didFailToGetLocation(error: error as NSError)
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let newLocation = locations.last!
-        print("didUpdateLocations \(newLocation)")
-        output?.didGetLocation(location: newLocation)
+        let location = locations.last!
+        print("New Location: \(location)")
+        if location.horizontalAccuracy <= manager.desiredAccuracy {
+            print("Got our accurate location! Stop Location Manager.")
+            output?.didGetLocation(location: location)
+            stopLocationManager()
+        }
     }
     private func stopLocationManager() {
         locationManager.stopUpdatingLocation()

@@ -45,11 +45,20 @@ extension SearchViewTrait where Self: UITableViewController {
     
     // MARK: - UITableView DataSource & Delegate
     func searchViewNumberOfRows() -> Int {
-        return interactor.result == nil ? 0 : 1
+        var numberOfRows = 0
+        if interactor.result != nil {numberOfRows += 1}
+        if interactor.currentWeather != nil {numberOfRows += 1}
+        return numberOfRows
     }
     func searchViewCellForRowAt(_ indexPath: IndexPath) -> UITableViewCell {
+        let data: Weather
+        if let currentWeather = interactor.currentWeather, indexPath.row == 0 {
+            data = currentWeather
+        } else {
+            data = interactor.result!
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath) as! ResultCell
-        cell.configure(interactor.result!)
+        cell.configure(data)
         return cell
     }
     func searchViewDidSelectRowAt(_ indexPath: IndexPath) {
@@ -115,6 +124,6 @@ extension SearchViewTrait where Self: UITableViewController {
         tableView.reloadData()
     }
     private func locationErrorHandler() {
-        tableView.reloadData()
+        print("Fail to get location...")
     }
 }

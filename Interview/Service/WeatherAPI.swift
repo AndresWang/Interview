@@ -11,6 +11,8 @@ import Foundation
 class WeatherAPI {
     weak var output: APIOutputDelegate?
     var dataTask: URLSessionDataTask?
+    let domain = "https://api.openweathermap.org/data/2.5/weather?"
+    let apiKey = "&APPID=ceb0d466055ae9ce11e993747afcc3a6"
     
     init(output: APIOutputDelegate) {
         self.output = output
@@ -40,9 +42,14 @@ class WeatherAPI {
     }
     
     // MARK: - Helper Methods
-    static func searchURL(with text: String) -> URL {
-        let encodedText = text.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        let searchTerm = String(format: "https://api.openweathermap.org/data/2.5/weather?q=%@&APPID=ceb0d466055ae9ce11e993747afcc3a6", encodedText)
+    func getUrl(searchText: String) -> URL {
+        let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let searchTerm = String(format: domain + "q=%@" + apiKey, encodedText)
         return URL(string: searchTerm)!
     }
+    func getUrl(lat: Double, lon:  Double) -> URL {
+        let searchTerm = String(format: domain + "lat=%f&lon=%f" + apiKey, lat, lon)
+        return URL(string: searchTerm)!
+    }
+    
 }
