@@ -10,8 +10,6 @@ import Foundation
 
 // Note: Protocol interface for api communication just in case we​ ​are​ ​asked​ ​to​ ​use​ ​a​ ​different​ ​api​.
 protocol APIDelegate: class {
-    var output: APIOutputDelegate? {get}
-    var dataTask: URLSessionDataTask? {get}
     func startFetchData(searchText: String)
     func startFetchData(lon: Double, lat: Double)
 }
