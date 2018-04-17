@@ -13,6 +13,8 @@ typealias ShouldPresentDeniedAlert = Bool
 protocol LocationDelegate: class, CLLocationManagerDelegate {
     func startLocationService() -> ShouldPresentDeniedAlert
 }
+
+// Note: For asynchronous purpose, and in this case its output is our Interactor.
 protocol LocationOutputDelegate: class {
     func didGetLocation(location: CLLocation)
     func didFailToGetLocation(error: NSError)
