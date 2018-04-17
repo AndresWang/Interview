@@ -30,9 +30,6 @@ class SearchViewController: UITableViewController, SearchViewTrait {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return searchViewCellForRowAt(indexPath)
     }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchViewDidSelectRowAt(indexPath)
-    }
     
     // MARK: - UISearchBarDelegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

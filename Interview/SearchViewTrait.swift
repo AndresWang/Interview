@@ -17,7 +17,6 @@ protocol SearchViewTrait: UISearchBarDelegate, ActivityIndicatable {
     func searchViewDidLoad()
     func searchViewNumberOfRows() -> Int
     func searchViewCellForRowAt(_ indexPath: IndexPath) -> UITableViewCell
-    func searchViewDidSelectRowAt(_ indexPath: IndexPath)
     func searchViewSearchButtonClicked(_ searchBar: UISearchBar)
 }
 
