@@ -22,8 +22,10 @@ class ResultCell: UITableViewCell {
     func configure(_ result: Weather) {
         name.text = result.name
         weatherDescription.text = result.description
-        let speed = String(result.wind["speed"]!)
-        let degree = String(result.wind["deg"]!)
+        let windSpeed = result.wind["speed"]
+        let speed = windSpeed != nil ? String(windSpeed!) : "N/A"
+        let windDeg = result.wind["deg"]
+        let degree = windDeg != nil ? String(windDeg!) : "N/A"
         wind.text = "Speed: \(speed), Degree: \(degree)"
         visibility.text = "Visibility: \(String(result.visibility))"
     }
