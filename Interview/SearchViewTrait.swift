@@ -111,6 +111,6 @@ extension SearchViewTrait where Self: UITableViewController {
         tableView.reloadData()
     }
     private func locationErrorHandler() {
-        print("Fail to get location...")
+        print("Failed to get location...")
     }
 }
